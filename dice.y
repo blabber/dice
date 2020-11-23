@@ -27,6 +27,7 @@ static char *_prompt(EditLine *_el);
 %token <value>	CONSTANT
 
 %type <value>	expression
+%type <value>	nonemptyexpr
 %type <value>	value
 
 %union {
@@ -63,8 +64,12 @@ lineend		: '\n'
 		| '\0'
 
 expression	: /* empty */
-			{ }
-		| expression '+' value
+			{
+				$$ = 0;
+			}
+		| nonemptyexpr
+
+nonemptyexpr	: nonemptyexpr '+' value
 			{
 				$$ = $1 + $3;
 			}
