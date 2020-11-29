@@ -2,19 +2,21 @@ dice - a trivial cli dice roller
 ================================
 
 This is a simple cli tool that can simulate arbitrary dice rolls for you. The
-main goal was however to build something using using `yacc(1)` and `lex(1)`.
+main goal was however to build something using `yacc(1)` and `lex(1)`.
 
 Usage
 -----
 
-This program reads form `stdin` and writes output to `stdout`.
+This program reads from `stdin` and writes output to `stdout`.
 
-To roll a dice, use the usual RPG notation, eg.  `3d6` means "roll three
-six-sided dice". This tool is case insensitive, so `3d6` and `3D6` are
-equivalent. If you want to roll only one dice, you can omit the dice quantity
-(`1d6` is equivalent to `d6`).
+To roll a dice, use the usual RPG notation, eg. `3d6` means "roll three
+six-sided dice and give me the sum of the rolled values". This tool is case
+insensitive, so `3d6` and `3D6` are equivalent. If you want to roll only one
+dice, you can omit the dice quantity (`1d6` is equivalent to `d6`).
 
-You can also give postive constant values and use the `+` operator for addition.
+You can also give postive constant values and use the common arithmetic
+operations `+`, `-`, `*` and `/` which work as expected. To override precedence
+you can use `(` and `)`.
 
 If you want to roll multiple dice in one row, delimit the expressions with `;`.
 

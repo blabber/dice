@@ -35,6 +35,9 @@ static char *_prompt(EditLine *_el);
 	int		value;
 }
 
+%left '+' '-'
+%left '*' '/'
+
 %start expressions
 
 %%
@@ -69,9 +72,30 @@ expression	: /* empty */
 			}
 		| nonemptyexpr
 
-nonemptyexpr	: nonemptyexpr '+' value
+nonemptyexpr	: nonemptyexpr '+' nonemptyexpr
 			{
 				$$ = $1 + $3;
+			}
+		| nonemptyexpr '-' nonemptyexpr
+			{
+				$$ = $1 - $3;
+			}
+		| nonemptyexpr '*' nonemptyexpr
+			{
+				$$ = $1 * $3;
+			}
+		| nonemptyexpr '/' nonemptyexpr
+			{
+				if ($3 == 0) {
+					yyerror("div by zero");
+					$$ = 0;
+				} else {
+					$$ = $1 / $3;
+				}
+			}
+		| '(' nonemptyexpr ')'
+			{
+				$$ = $2;
 			}
 		| value
 
@@ -115,7 +139,7 @@ main (int argc, char *argv[])
 void
 yyerror(const char *msg)
 {
-	/* fprintf(stderr, "E: %s\n", msg); */
+	fprintf(stderr, "E: %s\n", msg);
 }
 
 static int
