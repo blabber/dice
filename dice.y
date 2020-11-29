@@ -121,6 +121,7 @@ main (int argc, char *argv[])
 	if (is_interactive) {
 		hist = history_init();
 		history(hist, &hev, H_SETSIZE, 100);
+		history(hist, &hev, H_SETUNIQUE, 1);
 
 		el = el_init(*argv, yyin, stdout, stderr);
 		el_set(el, EL_HIST, history, hist);
